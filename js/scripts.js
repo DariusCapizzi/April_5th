@@ -3,23 +3,35 @@ function Ticket(name, timeOfDay, userAge) {
   this.movie = name;
   this.time = timeOfDay;
   this.age = userAge;
+  this.cost;
 }
 
 Ticket.prototype.processTicket = function() {
-  this.movie
-  this.time
-  this.age
+
   // parse movie for whitespace
+  // parse time as float
 
   //var declaration
+  var movie = this.movie.length;
+  // var age = parseInt(this.age);
+  // var time = parseInt(this.time);
+  var switchCase; //rating
 
-  var age = parseInt(this.age)
-  var cost  //return value
-  var switchCase  //rating
+
+  var randomCost = Math.floor( (Math.random() * (movie)) + 8 )  ;
+  // var randomCost = Math.random() ;
+//by time of day && movie name, determine cost
+
+  //matnee any show is six bucks
+  if( this.time < 6 ){
+    this.cost = "6 dollars before 6";
+  } else if ( this.time > 6) {
+    this.cost = randomCost + " dollars at " + this.time + " O'clock";
+  }
 
 
-// get rating from movie
-  switch(movie.length % 10){
+// get rating from movie by length
+  switch( movie % 10 ){
     // multiple switchcases
     case 0:
         var switchCase = "G";
@@ -53,23 +65,15 @@ Ticket.prototype.processTicket = function() {
         break;
   }
 
+  console.log(switchCase)
 //by rating test age, fail return "you are too young"
-  if (age < 17 && switchCase === "R"){
-    cost = "you are too young";
-  } else if (age < 13 && switchCase === "PG-13"){
-    cost = "you are too young";
-  } 
-
-//by time of day && movie name, determine cost
-
-  //matnee
-  if( timeOfDay<6 ){
-    return 6;
+  if (this.age < 17 && switchCase === "R"){
+    this.cost = "you are too young";
+  } else if (this.age < 13 && switchCase === "PG-13"){
+    this.cost = "you are too young";
   }
 
-// retur
-  return cost;
-
+  console.log(this.cost)
 
 };
 
@@ -93,22 +97,22 @@ $(document).ready(function() {
 
     var  inputName = $("#movieName").val();
     var  inputTime = $("#timeOfDay").val();
-    var  inputAge = $("#yourAge").val();
+    var  inputAge = $("#yourAge").val(); //parse int here
     var newTicket = new Ticket(inputName,inputTime,inputAge);
-    console.log(newTicket)
+    // console.log(newTicket)
 
+    newTicket.processTicket();
 
-    $("ul#contacts").append("<li><span class='contact'>" + newTicket.processTicket() + "</span></li>");
+    $("#tickets").append("<li><span class='contact'>" + newTicket.movie + "</span></li>");
 
     $(".contact").last().click(function() {
       $("#show-contact").show();
-      $("#show-contact h2").text(newContact.fullName());
-      $(".first-name").text(newContact.firstName);
-      $(".last-name").text(newContact.lastName);
-      $("ul#addresses").text("");
-      newContact.addresses.forEach(function(address) {
-        $("ul#addresses").append("<li>" + address.fullAddress() + "</li>");
-      });
+      $("#show-contact h2").text(newTicket.movie);
+      $(".first-name").text(newTicket.movie);
+      $(".last-name").text(newTicket.time + " O'clock");
+      $(".outAge").text(newTicket.age);
+      $(".outCost").text(newTicket.cost);
+
     });
 
 
